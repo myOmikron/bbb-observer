@@ -1,0 +1,13 @@
+[Unit]
+Description=BBB-Observer service
+After=bbb-web.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=venv/bin/python bbb-observer.py
+User=bbb-observer
+WorkingDirectory=/home/bbb-observer/bbb-observer/
+Restart=always
+KillSignal=SIGKILL
