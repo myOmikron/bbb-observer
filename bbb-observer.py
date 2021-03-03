@@ -34,7 +34,7 @@ def main():
     logging.basicConfig(level=config.logging_level)
 
     def receive(obj):
-        message: dict = json.loads(obj["data"].decode())
+        message = json.loads(obj["data"].decode())
         try:
             header = message["core"]["header"]
             logger.debug(f"Received redis message:\n{message['core']}")
