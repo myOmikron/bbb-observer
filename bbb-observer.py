@@ -37,7 +37,7 @@ def main():
         message = json.loads(obj["data"].decode())
         try:
             header = message["core"]["header"]
-            logger.debug(f"Received redis message:\n{message['core']}")
+            logger.debug("Received redis message:\n"+str(message["core"]))
             assert header["name"]
         except KeyError:
             logger.error("Malformed redis message: "+str(message))
