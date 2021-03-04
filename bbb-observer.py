@@ -46,8 +46,8 @@ def main():
         if header["name"] in config.events:
             try:
                 requests.post(config.url, json=message["core"], verify=config.verify_ssl_certs)
-            except:
-                logger.exception("Error while sending to endpoint:")
+            except requests.exceptions.RequestException as err:
+                logger.error(str(err))
         else:
             logger.debug("Event '"+str(header["name"])+"' has no handler")
 
