@@ -1,11 +1,13 @@
 import json
 import logging
+import os
 
 import urllib3
 import requests
 import redis
 import staticconfig
 from staticconfig import Namespace
+from rc_protocol import get_checksum
 
 
 logger = logging.getLogger(__name__)
@@ -22,6 +24,7 @@ class Config(staticconfig.Config):
 
         self.events = ["MeetingEndingEvtMsg"]
         self.url = "change_me"
+        self.rcp_secret = "change_me"
         self.verify_ssl_certs = True
 
         self.logging_level = logging.INFO
@@ -45,9 +48,12 @@ def main():
 
         if header["name"] in config.events:
             try:
+                parameters = message["core"]
+                parameters["checksum"] = get_checksum(parameters, config.rcp_secret, os.path.basename(config.url))
+
                 requests.post(
                     config.url,
-                    json=message["core"],
+                    json=parameters,
                     verify=config.verify_ssl_certs,
                     headers={"user-agent": "bbb-observer.py"}
                 )
