@@ -45,7 +45,12 @@ def main():
 
         if header["name"] in config.events:
             try:
-                requests.post(config.url, json=message["core"], verify=config.verify_ssl_certs)
+                requests.post(
+                    config.url,
+                    json=message["core"],
+                    verify=config.verify_ssl_certs,
+                    headers={"user-agent": "bbb-observer.py"}
+                )
             except requests.exceptions.RequestException as err:
                 logger.error(str(err))
         else:
