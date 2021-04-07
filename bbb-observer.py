@@ -48,12 +48,12 @@ def main():
 
         if header["name"] in config.events:
             try:
-                parameters = message["core"]
-                parameters["checksum"] = get_checksum(parameters, config.rcp_secret, os.path.basename(config.url))
+                params = {"event": json.dumps(message["core"])}
+                params["checksum"] = get_checksum(params, config.rcp_secret, os.path.basename(config.url))
 
                 requests.post(
                     config.url,
-                    json=parameters,
+                    json=params,
                     verify=config.verify_ssl_certs,
                     headers={"user-agent": "bbb-observer.py"}
                 )
