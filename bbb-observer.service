@@ -6,7 +6,7 @@ After=bbb-web.service
 WantedBy=multi-user.target
 
 [Service]
-ExecStart=/home/bbb-observer/bbb-observer/venv/bin/python bbb-observer.py
+ExecStart=/home/bbb-observer/bbb-observer/venv/bin/python3.9 bbb-observer.py
 User=bbb-observer
 WorkingDirectory=/home/bbb-observer/bbb-observer/
 Restart=always
