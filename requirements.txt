@@ -1,4 +1,4 @@
 redis==3.5.3
 staticconfig==0.0.5
 requests==2.25.1
-rc-protocol==0.0.3
+rc-protocol==0.0.4
