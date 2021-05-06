@@ -1,6 +1,6 @@
 [Unit]
 Description=BBB-Observer service
-After=bbb-web.service
+After=redis-server.service
 
 [Install]
 WantedBy=multi-user.target
