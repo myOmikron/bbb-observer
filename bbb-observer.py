@@ -22,7 +22,14 @@ class Config(staticconfig.Config):
         self.redis.port = 6379
         self.redis.db = 0
 
-        self.events = ["MeetingEndingEvtMsg"]
+        self.events = [
+            "MeetingEndingEvtMsg",
+            "ClearPublicChatHistoryPubMsg",
+        ]
+        self.channels = [
+            "from-akka-apps-redis-channel",
+            "to-akka-apps-redis-channel",
+        ]
         self.url = "change_me"
         self.rcp_secret = "change_me"
         self.verify_ssl_certs = True
@@ -64,7 +71,7 @@ def main():
 
     connection = redis.Redis(**config.redis)
     pubsub = connection.pubsub(ignore_subscribe_messages=True)
-    pubsub.subscribe(**{"from-akka-apps-redis-channel": receive})
+    pubsub.subscribe(**dict((channel, receive) for channel in config.channels))
 
     pubsub.run_in_thread(0.001).join()
 
